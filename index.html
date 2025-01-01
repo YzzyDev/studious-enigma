@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Jogos de Clique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .game-menu {
+            width: 25%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .game-menu h2 {
+            text-align: center;
+        }
+        .game-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+        .game-menu li {
+            margin: 10px 0;
+        }
+        .game-menu button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .game-menu button:hover {
+            background-color: #45a049;
+        }
+        .game-area {
+            flex-grow: 1;
+            margin-left: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .game-area h2 {
+            margin-bottom: 20px;
+        }
+        .click-button {
+            padding: 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .click-button:hover {
+            background-color: #0056b3;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DenkiClicks</h1>
+    </header>
+    <div class="container">
+        <!-- Menu de jogos -->
+        <div class="game-menu">
+            <h2>Jogos Disponíveis</h2>
+            <ul>
+                <li><button onclick="loadGame('game1')">Jogo 1: Clique Rápido</button></li>
+                <li><button onclick="loadGame('game2')">Jogo 2: Caça ao Alvo</button></li>
+            </ul>
+        </div>
+        <!-- Área do jogo -->
+        <div class="game-area" id="game-area">
+            <h2>Escolha um jogo no menu</h2>
+        </div>
+    </div>
+
+    <script>
+        function loadGame(game) {
+            const gameArea = document.getElementById('game-area');
+            if (game === 'game1') {
+                // Jogo 1: Clique Rápido
+                gameArea.innerHTML = `
+                    <h2>Jogo 1: Clique Rápido</h2>
+                    <button class="click-button" id="click-button">Clique Aqui</button>
+                    <p class="score" id="score">Pontos: 0</p>
+                `;
+                let score = 0;
+                const button = document.getElementById('click-button');
+                const scoreDisplay = document.getElementById('score');
+                button.addEventListener('click', () => {
+                    score++;
+                    scoreDisplay.textContent = 'Pontos: ' + score;
+                });
+            } else if (game === 'game2') {
+                // Jogo 2: Caça ao Alvo
+                gameArea.innerHTML = `
+                    <h2>Jogo 2: Caça ao Alvo</h2>
+                    <div id="target" style="width: 50px; height: 50px; background: red; border-radius: 50%; position: relative; margin: auto; cursor: pointer;"></div>
+                    <p class="score" id="score">Pontos: 0</p>
+                `;
+                let score = 0;
+                const target = document.getElementById('target');
+                const scoreDisplay = document.getElementById('score');
+
+                function moveTarget() {
+                    const x = Math.random() * (gameArea.offsetWidth - 50);
+                    const y = Math.random() * (gameArea.offsetHeight - 50);
+                    target.style.position = 'absolute';
+                    target.style.left = `${x}px`;
+                    target.style.top = `${y}px`;
+                }
+                target.addEventListener('click', () => {
+                    score++;
+                    scoreDisplay.textContent = 'Pontos: ' + score;
+                    moveTarget();
+                });
+                moveTarget();
+            }
+        }
+    </script>
+</body>
+</html>
